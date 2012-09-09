@@ -79,9 +79,12 @@ namespace ReactiveUI.Routing
 
         static string interfaceifyTypeName(string typeName)
         {
-            var parts = typeName.Split('.');
+            var typeVsAssembly = typeName.Split(',');
+            var parts = typeVsAssembly[0].Split('.');
             parts[parts.Length - 1] = "I" + parts[parts.Length - 1];
-            return String.Join(".", parts, 0, parts.Length);
+
+            var newType = String.Join(".", parts, 0, parts.Length);
+            return newType + "," + String.Join(",", typeVsAssembly.Skip(1));
         }
     }
 
