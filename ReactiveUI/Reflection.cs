@@ -259,19 +259,7 @@ namespace ReactiveUI
             return true;
         }
 
-        static readonly MemoizingMRUCache<string, Type> typeCache = new MemoizingMRUCache<string, Type>((type,_) => {
-    #if WINRT
-            // WinRT hates your favorite band too.
-            return Type.GetType(type, false);
-    #else
-            AppDomain.CurrentDomain.GetAssemblies().ForEach(x => Console.WriteLine(x.FullName));
-
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .Where(x => x.FullName.Equals(type, StringComparison.InvariantCulture))
-                .FirstOrDefault();
-    #endif
-        }, 20);
+        static readonly MemoizingMRUCache<string, Type> typeCache = new MemoizingMRUCache<string, Type>((type,_) => Type.GetType(type, false), 20);
 
         public static Type ReallyFindType(string type, bool throwOnFailure) 
         {
