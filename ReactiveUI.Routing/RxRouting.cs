@@ -45,7 +45,7 @@ namespace ReactiveUI.Routing
 
             // IFooBarView that implements IViewFor
 
-            var typeName = viewModel.GetType().FullName;
+            var typeName = viewModel.GetType().AssemblyQualifiedName;
 
             var typeToFind = interfaceifyTypeName(ViewModelToViewFunc(typeName));
 
