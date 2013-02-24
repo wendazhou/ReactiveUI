@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
@@ -43,12 +43,16 @@ namespace ReactiveUI.Routing
 
             // IFooBarView that implements IViewFor (or custom ViewModelToViewFunc)
             var typeToFind = ViewModelToViewFunc(viewModel.GetType().AssemblyQualifiedName);
-            Type type = Reflection.ReallyFindType(typeToFind, false);
 
-            if (type != null) {
-                var ret = RxApp.GetService(type, key) as IViewFor;
+            try {
+                var type = Reflection.ReallyFindType(typeToFind, false);
 
-                if (ret != null) return ret;
+                if (type != null) {
+                    var ret = RxApp.GetService(type, key) as IViewFor;
+                    if (ret != null) return ret;
+                }
+            } catch (Exception ex) {
+                LogHost.Default.DebugException("Couldn't instantiate " + typeToFind, ex);
             }
 
             LogHost.Default.Debug("Couldn't instantiate " + typeToFind);
@@ -56,12 +60,16 @@ namespace ReactiveUI.Routing
             var viewType = typeof (IViewFor<>);
 
             // IViewFor<IFooBarViewModel>
-            var ifn = interfaceifyTypeName(viewModel.GetType().AssemblyQualifiedName);
-            type = Reflection.ReallyFindType(ifn, false);
+            try {
+                var ifn = interfaceifyTypeName(viewModel.GetType().AssemblyQualifiedName);
+                var type = Reflection.ReallyFindType(ifn, false);
 
-            if (type != null) {
-                var ret = RxApp.GetService(viewType.MakeGenericType(type), key) as IViewFor;
-                if (ret != null) return ret;
+                if (type != null) {
+                    var ret =  RxApp.GetService(viewType.MakeGenericType(type), key) as IViewFor;
+                    if (ret != null) return ret;
+                }
+            } catch (Exception ex) {
+                LogHost.Default.DebugException("Couldn't instantiate View via pure interface type", ex);
             }
 
             LogHost.Default.Debug("Couldn't instantiate View via pure interface type");
@@ -136,3 +144,4 @@ namespace ReactiveUI.Routing
         }
     }
 }
+
