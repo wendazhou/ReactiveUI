@@ -3,8 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBox">
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <DockPanel LastChildFill="True">
+                                <TextBlock DockPanel.Dock="Right" Foreground="Red" FontSize="11pt" FontWeight="Bold">*</TextBlock>
+                                <Border BorderBrush="Red" BorderThickness="1">
+                                <AdornedElementPlaceholder Name="myControl"/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="true">
+                        <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
         <StackPanel Margin="6">
+            <Label>This textbox validates an email:</Label>
             <TextBox x:Name="MyTextBox"></TextBox>
+            <Label>This textbox's validation status can be set by the buttons:</Label>
             <TextBox x:Name="MySecondTextBox"></TextBox>
             <Button Click="SetError_OnClick">Set Error</Button>
             <Button Click="ClearError_OnClick">Clear error</Button>
