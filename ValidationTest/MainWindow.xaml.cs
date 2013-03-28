@@ -29,10 +29,10 @@ namespace ValidationTest
             ViewModel = new ViewModel();
 
             this.Bind(ViewModel, x => x.MyValidatedProperty, v => v.MyTextBox.Text);
-            this.DisplayValidationFor(x => x.MyTextBox.Text);
+            this.DisplayValidationFor(x => x.MyValidatedProperty);
 
             this.Bind(ViewModel, x => x.NestedViewModel.MyNotifyProperty, v => v.MySecondTextBox.Text);
-            this.DisplayValidationFor(x => x.MySecondTextBox.Text);
+            this.DisplayValidationFor(x => x.NestedViewModel.MyNotifyProperty);
         }
 
 
