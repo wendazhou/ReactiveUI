@@ -22,6 +22,8 @@ namespace ValidationTest
     /// </summary>
     public partial class MainWindow : Window, IViewFor<ViewModel>
     {
+        IDisposable disableValidation;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +34,8 @@ namespace ValidationTest
             this.DisplayValidationFor(x => x.MyValidatedProperty);
 
             this.Bind(ViewModel, x => x.NestedViewModel.MyNotifyProperty, v => v.MySecondTextBox.Text);
-            this.DisplayValidationFor(x => x.NestedViewModel.MyNotifyProperty);
+            disableValidation = this.DisplayValidationFor(x => x.NestedViewModel.MyNotifyProperty);
+
         }
 
 
@@ -46,6 +49,7 @@ namespace ValidationTest
         // Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ViewModelProperty =
             DependencyProperty.Register("ViewModel", typeof(ViewModel), typeof(MainWindow), new PropertyMetadata(null));
+
 
         object IViewFor.ViewModel
         {
@@ -62,6 +66,11 @@ namespace ValidationTest
         void ClearError_OnClick(object sender, RoutedEventArgs e)
         {
             ViewModel.NestedViewModel.HasErrors = false;
+        }
+
+        void DisableError_OnClick(object sender, RoutedEventArgs e)
+        {
+            disableValidation.Dispose();
         }
     }
 }

@@ -33,6 +33,7 @@
             <TextBox x:Name="MySecondTextBox"></TextBox>
             <Button Click="SetError_OnClick">Set Error</Button>
             <Button Click="ClearError_OnClick">Clear error</Button>
+            <Button Click="DisableError_OnClick">Disable validation</Button>
         </StackPanel>
     </Grid>
 </Window>
