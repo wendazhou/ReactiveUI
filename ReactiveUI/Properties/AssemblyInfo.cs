@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyDescription("An MVVM framework that integrates the Reactive Extensions")]
 [assembly: AssemblyProduct("ReactiveUI")]
-[assembly: AssemblyVersion("4.5.0")]
+[assembly: AssemblyVersion("4.6.3")]
 
 [assembly: InternalsVisibleTo("ReactiveUI.Explorables")]
 [assembly: InternalsVisibleTo("ReactiveUI.Xaml")]
@@ -41,3 +41,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("ReactiveUI.Android_Monodroid")]
 [assembly: InternalsVisibleTo("ReactiveUI.Mobile_WinRT")]
 [assembly: InternalsVisibleTo("ReactiveUI.Mobile_WP8")]
+[assembly: InternalsVisibleTo("ReactiveUI.Mobile_Monotouch")]
+[assembly: InternalsVisibleTo("ReactiveUI.Mobile_Monodroid")]
